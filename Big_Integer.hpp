@@ -1,19 +1,3 @@
-// Big_Interger_for_cpp
-// author: ruz
-
-// To Do List //
-// 1.	동적 unsigned int 배열 이용, 2^k 진법 수로 저장
-//		배열의 i번 원소는 2^k^i 항의 계수
-//		k는 실험적으로 결정 (FFT 오차)
-// 2.	곱 연산 시 제곱 크기인 __uint128_t 변수를 사용
-//		곱 연산은 FFT 알고리즘 적용 -> NTT+CRT?
-// 3.	음수 처리, 나눗셈 모듈러 연산
-// 4.	비트 연산 처리
-// 5.	스트림 입출력 오버로딩
-// 6.	캐스팅 연산
-// 7.	비교 연산
-// 8.	기본 자료형과의 호환성
-
 #ifndef BIG_INTEGER
 #define BIG_INTEGER
 
