@@ -1,13 +1,12 @@
 # Big_Interger_class_for_C++
-### author: ruz
-### last update: 21-09-07-17:30 GMT+9
+_last update: 21-09-07-17:30 GMT+9_
 
-**소개**
-동적 unsigned long 배열 이용, 2^k 진법 수로 저장
-배열의 i번 원소는 2^k^i 항의 계수
-k는 실험적으로 결정 (FFT 오차)
+### 소개
+동적 unsigned long 배열 이용, 2^k 진법 수로 저장  
+배열의 i번 원소는 2^k^i 항의 계수  
+k는 실험적으로 결정 (FFT 오차)  
 
-## // To Do List //
+## To Do List
 1. 덧셈 ❌
 2. 뺄셈 ❌
 3. 곱셈 FFT (-> NTT+CRT?) ❌
