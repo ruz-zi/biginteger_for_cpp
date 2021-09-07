@@ -1,14 +1,14 @@
 # Big_Interger_class_for_C++
-_last update: 21-09-07-17:30 GMT+9_
+_last update: 21-09-08-00:50 GMT+9_
 
 ### 소개
-동적 unsigned long 배열 이용, 2^k 진법 수로 저장  
+동적 signed long 배열 이용, 2^k 진법 수로 저장  
 배열의 i번 원소는 2^k^i 항의 계수  
 k는 실험적으로 결정 (FFT 오차)  
 
 ## To Do List
-1. 덧셈 ❌
-2. 뺄셈 ❌
+1. 덧셈 ✅
+2. 뺄셈 ✅
 3. 곱셈 FFT (-> NTT+CRT?) ❌
 5. 나눗셈 빠른 나눗셈 알고리즘 ❌
 6. 비트연산 ❌
