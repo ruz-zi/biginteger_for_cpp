@@ -17,12 +17,12 @@ class Bigint
 {
 public:
 // constructor & destructor
-	Bigint()						{}
-	Bigint(__int128_t __x)			{ _assign(__x); }
-	Bigint(const char *__s)			{ _assign(__s); }
-	Bigint(const std::string& __s)	{ _assign(__s.c_str()); }
-	Bigint(const Bigint& __x)		{ _assign(__x); }
-	~Bigint()						{ delete[] _data; }
+	Bigint();
+	Bigint(__int128_t);
+	Bigint(const char *);
+	Bigint(const std::string&);
+	Bigint(const Bigint&);
+	~Bigint();
 	
 // allocational & relational operators
 	Bigint& operator=(__int128_t);

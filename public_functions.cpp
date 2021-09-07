@@ -1,5 +1,32 @@
 #include "Big_Integer.hpp"
 
+Bigint::Bigint() {}
+
+Bigint::Bigint(__int128_t __x)
+{
+	_assign(__x);
+}
+
+Bigint::Bigint(const char *__s)
+{
+	_assign(__s);
+}
+
+Bigint::Bigint(const std::string& __s)
+{
+	_assign(__s.c_str());
+}
+
+Bigint::Bigint(const Bigint& __x)
+{
+	_assign(__x);
+}
+
+Bigint::~Bigint()
+{
+	delete[] _data;
+}
+
 std::string Bigint::to_string() const
 {
 	assert(_size >= 1);
