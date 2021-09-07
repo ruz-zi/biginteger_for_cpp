@@ -30,16 +30,16 @@ void Bigint::_normalize()
 		*_ptr += carry;
 		if (*_ptr < 0)
 		{
-			carry = -(-*_ptr + BASE_M >> BASE_K);
-			*_ptr = (*_ptr & BASE_M) + BASE & BASE_M;
+			carry = -((-*_ptr + BASE - 1) / BASE);
+			*_ptr = (*_ptr % BASE + BASE) % BASE;
 		}
 		else if (!(*_ptr < BASE))
 		{
-			carry = *_ptr >> BASE_K;
-			*_ptr = *_ptr & BASE_M;
+			carry = *_ptr / BASE;
+			*_ptr = *_ptr % BASE;
 		}
-	} while (carry > 0 && ++_ptr != _data + _size);
-	
+		else carry = 0;
+	} while (carry != 0 && ++_ptr != _data + _size);
 	if (carry > 0)
 	{
 		if (_size == _capa)
@@ -68,14 +68,27 @@ void Bigint::_assign(__int128_t __x)
 
 void Bigint::_assign(const char *__s)
 {
-	_alloc(2);
-	if (*__s == '+' || *__s == '-')
-		_negative = *__s++ == '-';
-	while (*__s)
+	value_t _tmp = 0;
+	size_t _n = 0, _i, _j;
+	
+	_negative = *__s == '+' || *__s == '-' ? *__s++ == '-' : 0;
+	while (__s[_n]) _n++;
+	
+	if (_data) delete[] _data;
+	_data = new value_t[_capa = _n / BASE_K + 1];
+	
+	_size = 0;
+	for (_i = _n; _i >= BASE_K; _i -= BASE_K)
 	{
-		*this *= 10;
-		*this += *__s++ & 15;
+		for (_j = _i - BASE_K; _j < _i; ++_j)
+			_tmp = _tmp * 10 + (__s[_j] & 15);
+		_data[_size++] = _tmp;
+		_tmp = 0;
 	}
+	for (_j = 0; _j < _i; ++_j)
+		_tmp = _tmp * 10 + (__s[_j] & 15);
+	_data[_size++] = _tmp;
+	_normalize();
 }
 
 void Bigint::_assign(const Bigint& __x)

@@ -2,10 +2,15 @@
 
 std::string Bigint::to_string() const
 {
-	std::string _str = _negative ? "-" : "";
+	assert(_size >= 1);
+	register size_t _i;
 	value_t *_ptr = _data + _size;
-	while (_ptr != _data)
-		_str += std::to_string(*--_ptr);
+	std::string _str = (_negative ? "-" : "");
+	
+	_str += std::to_string(*--_ptr);
+	while (_ptr-- != _data)
+		for (_i = BASE / 10; _i > 0; _i /= 10)
+			_str += *_ptr / _i % 10 + '0';
 	return _str;
 }
 

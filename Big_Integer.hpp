@@ -1,15 +1,17 @@
 #ifndef BIG_INTEGER
 #define BIG_INTEGER
 
-#include <string>
 #include <iostream>
+#include <iomanip>
+#include <complex>
+#include <string>
+#include <cmath>
 #include <cassert>
 
 typedef signed long long value_t;
 
-constexpr char		BASE_K	= 30;
-constexpr value_t	BASE	= 1 << BASE_K;
-constexpr value_t	BASE_M	= BASE - 1;
+constexpr char		BASE_K	= 7;
+constexpr value_t	BASE	= 10000000;
 
 class Bigint
 {
