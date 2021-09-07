@@ -3,11 +3,13 @@
 
 #include <string>
 #include <iostream>
+#include <cassert>
 
-using value_t = __uint64_t;
+typedef signed long long value_t;
 
 constexpr char		BASE_K	= 30;
 constexpr value_t	BASE	= 1 << BASE_K;
+constexpr value_t	BASE_M	= BASE - 1;
 
 class Bigint
 {
@@ -27,21 +29,42 @@ public:
 	Bigint& operator=(const Bigint&);
 	
 	bool operator==(const Bigint&) const;
+	bool operator!=(const Bigint&) const;
 	bool operator< (const Bigint&) const;	
+	bool operator> (const Bigint&) const;
+	bool operator<=(const Bigint&) const;
+	bool operator>=(const Bigint&) const;
 
 // arithmetic operators
-	const Bigint& operator-() const;
+	Bigint operator-() const;
+	Bigint& operator+=(__int128_t);
+	Bigint& operator-=(__int128_t);
+	Bigint& operator*=(__int128_t);
+	Bigint& operator/=(__int128_t);
+	Bigint& operator%=(__int128_t);
+	Bigint& operator&=(__int128_t);
+	Bigint& operator|=(__int128_t);
+	Bigint& operator^=(__int128_t);
 	Bigint& operator+=(const Bigint&);
 	Bigint& operator-=(const Bigint&);
 	Bigint& operator*=(const Bigint&);
 	Bigint& operator/=(const Bigint&);
+	Bigint& operator%=(const Bigint&);
 	Bigint& operator&=(const Bigint&);
 	Bigint& operator|=(const Bigint&);
 	Bigint& operator^=(const Bigint&);
-
-// public functions
-	const std::string& to_string() const;
+	Bigint operator+(const Bigint&) const;
+	Bigint operator-(const Bigint&) const;
+	Bigint operator*(const Bigint&) const;
+	Bigint operator/(const Bigint&) const;
+	Bigint operator%(const Bigint&) const;
+	Bigint operator&(const Bigint&) const;
+	Bigint operator|(const Bigint&) const;
+	Bigint operator^(const Bigint&) const;
 	
+// public functions
+	std::string to_string() const;
+	void swap(Bigint&);
 	
 private:
 	value_t	*_data = nullptr;
@@ -52,29 +75,13 @@ private:
 // private functions
 	void _alloc(size_t);
 	void _realloc(size_t);
-	void _copy_n(value_t *, value_t *, size_t);
 	void _normalize();
 	void _assign(__int128_t);
 	void _assign(const char *);
 	void _assign(const Bigint&);
+	int _comp_abs(const Bigint&) const;
 };
 
-template <typename I> I&	operator>>(I& __in, Bigint& __x)
-{
-	std::string _str;
-	__in >> _str;
-	__x._assign(_str.c_str());
-	return __in;
-}
-template <typename O> O&	operator<<(O& __out, const Bigint& __x)
-{
-	__out << __x.to_string();
-	return __out;
-}
-bool operator!=(const Bigint& __lhs, const Bigint& __rhs) { return !(__lhs == __rhs); }
-bool operator> (const Bigint& __lhs, const Bigint& __rhs) { return __rhs < __lhs; }
-bool operator<=(const Bigint& __lhs, const Bigint& __rhs) { return !(__rhs < __lhs); }
-bool operator>=(const Bigint& __lhs, const Bigint& __rhs) { return !(__lhs < __rhs); }
 template <typename T> bool operator==(const Bigint& __lhs, T __rhs) { return __lhs == Bigint(__rhs); }
 template <typename T> bool operator!=(const Bigint& __lhs, T __rhs) { return !(__lhs == Bigint(__rhs)); }
 template <typename T> bool operator< (const Bigint& __lhs, T __rhs) { return __lhs < Bigint(__rhs); }
@@ -88,28 +95,35 @@ template <typename T> bool operator> (T __lhs, const Bigint& __rhs) { return __r
 template <typename T> bool operator<=(T __lhs, const Bigint& __rhs) { return !(__rhs < Bigint(__lhs)); }
 template <typename T> bool operator>=(T __lhs, const Bigint& __rhs) { return !(Bigint(__lhs) < __rhs); }
 
-const Bigint& operator+(const Bigint& __lhs, const Bigint& __rhs) { return Bigint(__lhs) += __rhs; }
-const Bigint& operator-(const Bigint& __lhs, const Bigint& __rhs) { return Bigint(__lhs) -= __rhs; }
-const Bigint& operator*(const Bigint& __lhs, const Bigint& __rhs) { return Bigint(__lhs) *= __rhs; }
-const Bigint& operator/(const Bigint& __lhs, const Bigint& __rhs) { return Bigint(__lhs) /= __rhs; }
-const Bigint& operator&(const Bigint& __lhs, const Bigint& __rhs) { return Bigint(__lhs) &= __rhs; }
-const Bigint& operator|(const Bigint& __lhs, const Bigint& __rhs) { return Bigint(__lhs) |= __rhs; }
-const Bigint& operator^(const Bigint& __lhs, const Bigint& __rhs) { return Bigint(__lhs) ^= __rhs; }
-template <typename T> const Bigint& operator+(const Bigint& __lhs, T __rhs) { return Bigint(__rhs) += __lhs; }
-template <typename T> const Bigint& operator-(const Bigint& __lhs, T __rhs) { return Bigint(__lhs) -= Bigint(__rhs); }
-template <typename T> const Bigint& operator*(const Bigint& __lhs, T __rhs) { return Bigint(__rhs) *= __lhs; }
-template <typename T> const Bigint& operator/(const Bigint& __lhs, T __rhs) { return Bigint(__lhs) /= Bigint(__rhs); }
-template <typename T> const Bigint& operator%(const Bigint& __lhs, T __rhs) { return Bigint(__lhs) %= Bigint(__rhs); }
-template <typename T> const Bigint& operator&(const Bigint& __lhs, T __rhs) { return Bigint(__rhs) &= __lhs; }
-template <typename T> const Bigint& operator|(const Bigint& __lhs, T __rhs) { return Bigint(__rhs) |= __lhs; }
-template <typename T> const Bigint& operator^(const Bigint& __lhs, T __rhs) { return Bigint(__rhs) ^= __lhs; }
-template <typename T> const Bigint& operator+(T __lhs, const Bigint& __rhs) { return Bigint(__lhs) += __rhs; }
-template <typename T> const Bigint& operator-(T __lhs, const Bigint& __rhs) { return Bigint(__lhs) -= __rhs; }
-template <typename T> const Bigint& operator*(T __lhs, const Bigint& __rhs) { return Bigint(__lhs) *= __rhs; }
-template <typename T> const Bigint& operator/(T __lhs, const Bigint& __rhs) { return Bigint(__lhs) /= __rhs; }
-template <typename T> const Bigint& operator%(T __lhs, const Bigint& __rhs) { return Bigint(__lhs) %= __rhs; }
-template <typename T> const Bigint& operator&(T __lhs, const Bigint& __rhs) { return Bigint(__lhs) &= __rhs; }
-template <typename T> const Bigint& operator|(T __lhs, const Bigint& __rhs) { return Bigint(__lhs) |= __rhs; }
-template <typename T> const Bigint& operator^(T __lhs, const Bigint& __rhs) { return Bigint(__lhs) ^= __rhs; }
+
+template <typename T> Bigint operator+(const Bigint& __lhs, T __rhs) { return Bigint(__rhs) += __lhs; }
+template <typename T> Bigint operator-(const Bigint& __lhs, T __rhs) { return Bigint(__lhs) -= Bigint(__rhs); }
+template <typename T> Bigint operator*(const Bigint& __lhs, T __rhs) { return Bigint(__rhs) *= __lhs; }
+template <typename T> Bigint operator/(const Bigint& __lhs, T __rhs) { return Bigint(__lhs) /= Bigint(__rhs); }
+template <typename T> Bigint operator%(const Bigint& __lhs, T __rhs) { return Bigint(__lhs) %= Bigint(__rhs); }
+template <typename T> Bigint operator&(const Bigint& __lhs, T __rhs) { return Bigint(__rhs) &= __lhs; }
+template <typename T> Bigint operator|(const Bigint& __lhs, T __rhs) { return Bigint(__rhs) |= __lhs; }
+template <typename T> Bigint operator^(const Bigint& __lhs, T __rhs) { return Bigint(__rhs) ^= __lhs; }
+template <typename T> Bigint operator+(T __lhs, const Bigint& __rhs) { return Bigint(__lhs) += __rhs; }
+template <typename T> Bigint operator-(T __lhs, const Bigint& __rhs) { return Bigint(__lhs) -= __rhs; }
+template <typename T> Bigint operator*(T __lhs, const Bigint& __rhs) { return Bigint(__lhs) *= __rhs; }
+template <typename T> Bigint operator/(T __lhs, const Bigint& __rhs) { return Bigint(__lhs) /= __rhs; }
+template <typename T> Bigint operator%(T __lhs, const Bigint& __rhs) { return Bigint(__lhs) %= __rhs; }
+template <typename T> Bigint operator&(T __lhs, const Bigint& __rhs) { return Bigint(__lhs) &= __rhs; }
+template <typename T> Bigint operator|(T __lhs, const Bigint& __rhs) { return Bigint(__lhs) |= __rhs; }
+template <typename T> Bigint operator^(T __lhs, const Bigint& __rhs) { return Bigint(__lhs) ^= __rhs; }
+
+template <typename I> I& operator>>(I& __in, Bigint& __x)
+{
+	std::string _str;
+	__in >> _str;
+	__x._assign(_str.c_str());
+	return __in;
+}
+template <typename O> O& operator<<(O& __out, const Bigint& __x)
+{
+	__out << __x.to_string();
+	return __out;
+}
 
 #endif

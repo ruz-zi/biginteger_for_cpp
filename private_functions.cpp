@@ -1,6 +1,6 @@
 #include "Big_Integer.hpp"
 
-void Bigint::_copy_n(value_t *__dst, value_t *__src, size_t __n)
+static void _copy_n(value_t *__dst, value_t *__src, size_t __n)
 {
 	while (__n-- > 0)
 		*__dst++ = *__src++;
@@ -24,14 +24,22 @@ void Bigint::_realloc(size_t __n)
 
 void Bigint::_normalize()
 {
-	register size_t i;
 	value_t carry = 0;
-	for (i = 0; i < _size; ++i)
-	{
-		_data[i] += carry;
-		if ((carry = _data[i] >> BASE_K) > 0)
-			_data[i] &= BASE - 1;
-	}
+	register value_t *_ptr = _data;
+	do {
+		*_ptr += carry;
+		if (*_ptr < 0)
+		{
+			carry = -(-*_ptr + BASE_M >> BASE_K);
+			*_ptr = (*_ptr & BASE_M) + BASE & BASE_M;
+		}
+		else if (!(*_ptr < BASE))
+		{
+			carry = *_ptr >> BASE_K;
+			*_ptr = *_ptr & BASE_M;
+		}
+	} while (carry > 0 && ++_ptr != _data + _size);
+	
 	if (carry > 0)
 	{
 		if (_size == _capa)
@@ -60,7 +68,14 @@ void Bigint::_assign(__int128_t __x)
 
 void Bigint::_assign(const char *__s)
 {
-	//
+	_alloc(2);
+	if (*__s == '+' || *__s == '-')
+		_negative = *__s++ == '-';
+	while (*__s)
+	{
+		*this *= 10;
+		*this += *__s++ & 15;
+	}
 }
 
 void Bigint::_assign(const Bigint& __x)
@@ -73,4 +88,14 @@ void Bigint::_assign(const Bigint& __x)
 	_data = new value_t[_capa];
 	
 	_copy_n(_data, __x._data, _size);
+}
+
+int Bigint::_comp_abs(const Bigint& __x) const
+{
+	if (_size != __x._size) return (int)_size - (int)__x._size;
+	size_t _i = _size;
+	while (_i-- > 0)
+		if (*(_data + _i) != *(__x._data + _i))
+			return *(_data + _i) - *(__x._data + _i);
+	return 0;
 }
