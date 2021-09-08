@@ -26,7 +26,7 @@ Bigint& Bigint::operator=(const Bigint& __x)
 
 bool Bigint::operator==(const Bigint& __rhs) const
 {
-	return (_negative == __rhs._negative && _comp_abs(__rhs) == 0);
+	return (_sign == __rhs._sign && _comp_abs(__rhs) == 0);
 }
 bool Bigint::operator!=(const Bigint& __rhs) const
 {
@@ -34,9 +34,9 @@ bool Bigint::operator!=(const Bigint& __rhs) const
 }
 bool Bigint::operator< (const Bigint& __rhs) const
 {
-	if (_negative != __rhs._negative)
-		return _negative;
-	return _negative ? _comp_abs(__rhs) > 0 : _comp_abs(__rhs) < 0;
+	if (_sign != __rhs._sign)
+		return _sign;
+	return _sign ? _comp_abs(__rhs) > 0 : _comp_abs(__rhs) < 0;
 }
 bool Bigint::operator> (const Bigint& __rhs) const
 {

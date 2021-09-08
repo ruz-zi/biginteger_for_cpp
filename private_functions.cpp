@@ -72,7 +72,7 @@ void Bigint::_assign(const char *__s)
 	size_t _n = 0, _i, _j;
 	
 	_sign = *__s == '+' || *__s == '-' ? *__s++ == '-' : 0;
-	while (__s[_n]) _n++;
+	while (__s[_n] >= 48 && __s[_n] < 58) _n++;
 	
 	if (_data) delete[] _data;
 	_data = new value_t[_capa = _n / BASE_K + 1];
