@@ -72,7 +72,7 @@ private:
 	value_t	*_data = nullptr;
 	size_t	_capa;
 	size_t	_size;
-	bool	_negative;
+	bool	_sign;
 	
 // private functions
 	void _alloc(size_t);

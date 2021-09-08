@@ -11,7 +11,7 @@ void Bigint::_alloc(size_t __n)
 	if (_data) delete[] _data;
 	_data = new value_t[_capa = __n];
 	_size = 1;
-	_negative = 0;
+	_sign = 0;
 }
 
 void Bigint::_realloc(size_t __n)
@@ -56,7 +56,7 @@ void Bigint::_assign(__int128_t __x)
 	_alloc(2);
 	if (__x < 0)
 	{
-		_negative = 1;
+		_sign = 1;
 		*_data = 1ULL + ~__x;
 	}
 	else
@@ -71,7 +71,7 @@ void Bigint::_assign(const char *__s)
 	value_t _tmp = 0;
 	size_t _n = 0, _i, _j;
 	
-	_negative = *__s == '+' || *__s == '-' ? *__s++ == '-' : 0;
+	_sign = *__s == '+' || *__s == '-' ? *__s++ == '-' : 0;
 	while (__s[_n]) _n++;
 	
 	if (_data) delete[] _data;
@@ -95,7 +95,7 @@ void Bigint::_assign(const Bigint& __x)
 {
 	_size = __x._size;
 	_capa = __x._capa;
-	_negative = __x._negative;
+	_sign = __x._sign;
 	
 	if (_data) delete[] _data;
 	_data = new value_t[_capa];

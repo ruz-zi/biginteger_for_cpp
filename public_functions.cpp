@@ -32,7 +32,7 @@ std::string Bigint::to_string() const
 	assert(_size >= 1);
 	register size_t _i;
 	value_t *_ptr = _data + _size;
-	std::string _str = (_negative ? "-" : "");
+	std::string _str = (_sign ? "-" : "");
 	
 	_str += std::to_string(*--_ptr);
 	while (_ptr-- != _data)

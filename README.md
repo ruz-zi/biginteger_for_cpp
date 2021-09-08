@@ -20,3 +20,5 @@ k는 실험적으로 결정 (FFT 오차)  k->7
 10. 할당 연산 ✅
 11. 기본 자료형과의 호환성 ✅
 
+## 참고 문헌, 출처
+[secmem/cubelover - 빠른 다항식 나눗셈](http://www.secmem.org/blog/2019/04/10/polynomial-division/)
