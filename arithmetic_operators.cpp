@@ -88,11 +88,11 @@ Bigint& Bigint::operator-=(__int128_t __x)
 
 Bigint& Bigint::operator*=(__int128_t __x)
 {
+	_sign = *this == 0 || __x == 0 ? 0 : _sign ^ (__x < 0);
 	value_t *_ptr = _data + _size;
 	while (_ptr-- != _data)
 		*_ptr *= __x;
 	_normalize();
-	_sign = *this == 0 ? 0 : _sign ^ (__x < 0);
 	return *this;
 }
 

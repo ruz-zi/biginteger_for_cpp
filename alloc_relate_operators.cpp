@@ -6,12 +6,6 @@ Bigint& Bigint::operator=(__int128_t __x)
 	return *this;
 }
 
-Bigint& Bigint::operator=(const char *__s)
-{
-	_assign(__s);
-	return *this;
-}
-
 Bigint& Bigint::operator=(const std::string& __s)
 {
 	_assign(__s.c_str());
@@ -50,4 +44,3 @@ bool Bigint::operator>=(const Bigint& __rhs) const
 {
 	return !(*this < __rhs);
 }
-
