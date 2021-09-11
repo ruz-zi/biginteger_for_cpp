@@ -27,7 +27,7 @@ k는 실험적으로 결정 (FFT 오차)  k->7
 ### 생성/초기화
 
 ```cpp
-Bigint a; //메모리가 할당되지 않음
+Bigint a; //메모리가 할당되지 않은 상태
 Bigint b = 123;
 Bigint c = "234";
 Bigint d = std::string("345");
@@ -46,15 +46,31 @@ std::cout << a;
 #### 파일 입출력
 
 ```cpp
-//파일 입출력
 fstream in;
 fstream out;
-in.open("in", fstream::in);
-out.open("out", fstream::out);
+in.open("input.in", fstream::in);
+out.open("output.out", fstream::out);
 
 Bigint b;
 in >> b;
 out << b;
+```
+
+### 대입 연산
+
+```cpp
+Bigint a;
+a = 123;
+std::cout << a << std::endl;
+a = "234";
+std::cout << a << std::endl;
+```
+
+#### output
+
+```txt
+123
+234
 ```
 
 ## 참고 문헌, 출처
