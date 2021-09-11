@@ -77,6 +77,22 @@ public:
 	std::string to_string() const;
 	void swap(Bigint&);
 	
+// input/output
+	template <typename Istream>
+	friend Istream& operator>>(Istream& __in, Bigint& __x)
+	{
+		std::string _str;
+		__in >> _str;
+		__x._assign(_str.c_str());
+		return __in;
+	}
+	template <typename Ostream>
+	friend Ostream& operator<<(Ostream& __out, const Bigint& __x)
+	{
+		__out << __x.to_string();
+		return __out;
+	}
+	
 private:
 	value_t	*_data = nullptr;
 	size_t	_capa;
@@ -109,17 +125,5 @@ template <typename T> Bigint operator&(T __lhs, const Bigint& __rhs) { return Bi
 template <typename T> Bigint operator|(T __lhs, const Bigint& __rhs) { return Bigint(__lhs) |= __rhs; }
 template <typename T> Bigint operator^(T __lhs, const Bigint& __rhs) { return Bigint(__lhs) ^= __rhs; }
 
-template <typename I> I& operator>>(I& __in, Bigint& __x)
-{
-	std::string _str;
-	__in >> _str;
-	__x._assign(_str.c_str());
-	return __in;
-}
-template <typename O> O& operator<<(O& __out, const Bigint& __x)
-{
-	__out << __x.to_string();
-	return __out;
-}
 
 #endif

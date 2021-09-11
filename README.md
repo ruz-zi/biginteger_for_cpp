@@ -26,21 +26,36 @@ k는 실험적으로 결정 (FFT 오차)  k->7
 
 ### 생성/초기화
 
-#### code
-
 ```cpp
 Bigint a; //메모리가 할당되지 않음
 Bigint b = 123;
 Bigint c = "234";
 Bigint d = std::string("345");
-
-//cout << a; //segmentation fault
-cout << b << ' ' << c << ' ' << d;
 ```
 
-#### result
+### 입출력
 
-`123 234 345`
+#### 표준 입출력
+
+```cpp
+Bigint a;
+std::cin >> a;
+std::cout << a;
+```
+
+#### 파일 입출력
+
+```cpp
+//파일 입출력
+fstream in;
+fstream out;
+in.open("in", fstream::in);
+out.open("out", fstream::out);
+
+Bigint b;
+in >> b;
+out << b;
+```
 
 ## 참고 문헌, 출처
 
