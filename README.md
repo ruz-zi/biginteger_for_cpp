@@ -29,8 +29,9 @@ k는 실험적으로 결정 (FFT 오차)  k->7
 ```cpp
 Bigint a; //메모리가 할당되지 않은 상태
 Bigint b = 123;
-Bigint c = "234";
-Bigint d = std::string("345");
+Bigint c = "123";
+Bigint d = std::string("123");
+Bigint e = b;
 ```
 
 ### 입출력
@@ -39,6 +40,7 @@ Bigint d = std::string("345");
 
 ```cpp
 Bigint a;
+
 std::cin >> a;
 std::cout << a;
 ```
@@ -46,12 +48,12 @@ std::cout << a;
 #### 파일 입출력
 
 ```cpp
-fstream in;
-fstream out;
-in.open("input.in", fstream::in);
-out.open("output.out", fstream::out);
-
+fstream in, out;
 Bigint b;
+
+in.open("input_file", fstream::in);
+out.open("output_file", fstream::out);
+
 in >> b;
 out << b;
 ```
@@ -59,11 +61,27 @@ out << b;
 ### 대입 연산
 
 ```cpp
-Bigint a;
+Bigint a, b;
+
 a = 123;
-std::cout << a << std::endl; // 123
-a = "234";
-std::cout << a << std::endl; // 234
+a = "123";
+b = a;
+```
+
+### 비교 연산
+
+```cpp
+Bigint a = 123, b = "123";
+Bigint c = 100;
+
+std::cout << std::fixed << std::boolalpha;
+
+std::cout << (a == b); // true
+std::cout << (a != b); // false
+std::cout << (a <  c); // false
+std::cout << (a <= c); // false
+std::cout << (a >  c); // true
+std::cout << (a >= c); // false
 ```
 
 ## 참고 문헌, 출처
