@@ -61,16 +61,9 @@ out << b;
 ```cpp
 Bigint a;
 a = 123;
-std::cout << a << std::endl;
+std::cout << a << std::endl; // 123
 a = "234";
-std::cout << a << std::endl;
-```
-
-#### output
-
-```txt
-123
-234
+std::cout << a << std::endl; // 234
 ```
 
 ## 참고 문헌, 출처
