@@ -76,12 +76,50 @@ Bigint c = 100;
 
 std::cout << std::fixed << std::boolalpha;
 
-std::cout << (a == b); // true
-std::cout << (a != b); // false
-std::cout << (a <  c); // false
-std::cout << (a <= c); // false
-std::cout << (a >  c); // true
-std::cout << (a >= c); // false
+std::cout << (a == b) << ' ' << (a != b); // true false
+std::cout << (a <  c) << ' ' << (a >= c); // false true
+std::cout << (a >  c) << ' ' << (a <= c); // true false
+```
+
+### 이항 산술 연산
+
+#### 부호 변환
+
+```cpp
+Bigint a = 123;
+
+std::cout << -a; // -123
+std::cout << -Bigint("-123"); // 123
+```
+
+#### 덧셈
+
+```cpp
+Bigint a = 123, b = 234;
+
+std::cout << a + b; // 357
+std::cout << a + "111"; // 234
+std::cout << 100 + b; // 334
+```
+
+#### 뺄셈
+
+```cpp
+Bigint a = 123, b = 234;
+
+std::cout << a - b; // -111
+std::cout << b - a; // 111
+std::cout << "100" - a; // -23
+```
+
+#### 곱셈
+
+```cpp
+Bigint a = 123, b = 234;
+
+std::cout << a * b; // 28782
+std::cout << a * -b; // -28782
+std::cout << "100" * a; // 12300
 ```
 
 ## 참고 문헌, 출처
